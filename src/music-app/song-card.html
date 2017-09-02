@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-audio-player/paper-audio-icons.html">
+<link rel="import" href="../../bower_components/paper-audio-player/paper-audio-player.html">
+
+<dom-module id="song-card">
+    <template>
+        <style>
+            :host {
+                flex-grow: 1;
+                flex-basis: 10px
+            }
+            paper-card {
+                margin: 10%;
+                width: 80%
+            }
+        </style>
+        <paper-card image="">
+            <div class="card-content">
+                <h2>{{song.name}}</h2>
+                <p>
+                    {{song.singer}} &bull; &middot; {{song.album}}
+                </p>
+            </div>
+            <div class="card-actions">
+                <paper-audio-player src="" title="[[song.name]]" color="#F05C38"></paper-audio-player>
+            </div>
+        </paper-card>
+    </template>
+
+    <script>
+        class SongCard extends Polymer.Element {
+            static get is () { return 'song-card' }
+            static get properties () {
+                return {
+                    song: {
+                        type: Object
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(SongCard.is, SongCard)
+    </script>
+</dom-module>

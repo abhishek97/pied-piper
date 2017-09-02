@@ -1,0 +1,98 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-layout/demo/sample-content.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="./explore-view.html">
+
+
+<dom-module id="music-app">
+  <template>
+    <style>
+      app-header {
+        background-color: #673AB7;
+        color: #ffffff;
+        left: 0px
+      }
+      paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+      }
+      a {
+        text-decoration: none;
+      }
+    </style>
+    <app-location route="{{route}}"></app-location>
+    <app-route
+      route="{{route}}"
+      pattern="/:page"
+      data="{{data}}"
+      tail="{{tail}}">
+    </app-route>
+
+
+    <app-drawer-layout>
+      <app-drawer slot="drawer">
+        <app-toolbar>
+          <a href="home"><paper-button class="indigo">Home</paper-button></a>
+        </app-toolbar>
+        <app-toolbar>
+          <a href="explore"><paper-button class="indigo">Explore</paper-button></a>
+        </app-toolbar>
+      </app-drawer>
+      <app-header-layout>
+        <app-header slot="header" reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <div main-title>Title</div>
+          </app-toolbar>
+        </app-header>
+        <iron-pages
+                selected="[[data.page]]"
+                attr-for-selected="name"
+                fallback-selection="home"
+                role="main">
+          <explore-view name="explore"></explore-view>
+          <sample-content name="home" size="10"></sample-content>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class MusicApp extends Polymer.Element {
+      static get is() { return 'music-app'; }
+      constructor () {
+          super()
+          console.log(this.route, this.data)
+      }
+      static get properties() {
+        return {
+          data: {
+            type: String
+          },
+          route: {
+              type: String
+          }
+        };
+      }
+    }
+
+    window.customElements.define(MusicApp.is, MusicApp);
+  </script>
+</dom-module>

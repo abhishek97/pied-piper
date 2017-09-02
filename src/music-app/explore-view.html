@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./song-card.html">
+
+<dom-module id="explore-view">
+    <style>
+        :host {
+            display: block;
+        }
+    </style>
+    <template>
+        <iron-ajax
+            auto
+            url="http://localhost:4000/list"
+            handle-as="json"
+            on-response="updateList"
+            last-response="{{songList}}"
+        >
+        </iron-ajax>
+        <div class="songContainer" style="display: flex; justify-content: space-evenly">
+            <template is="dom-repeat" items="{{songList}}">
+               <song-card song="[[item]]"></song-card>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        class ExploreView extends Polymer.Element {
+            static get is () { return 'explore-view' }
+            static get properties () {
+                return {
+                    songList: {
+                        type: Array,
+                        value: []
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(ExploreView.is, ExploreView)
+    </script>
+</dom-module>
